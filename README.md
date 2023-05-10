@@ -15,3 +15,7 @@
 - **Keine Code Duplikate**:
   In HTML Dateien darf es vorkommen, dass HTML Code mehrfach vorkommt (zB. derselbe HTML Code für Header und Footer).
   Derselbe CSS und JS Code darf jedoch nie mehrfach vorkommen, weder in derselben Datei noch über alle Dateien.
+- **Eigener Code**:
+Schreiben Sie eigenen Code.   
+Bei Code, der von externen Quellen übernommen wurde, muss die Quelle in der Projektdokumentation dokumentiert werden. 
+Das Unterrichtsmaterial gilt nicht als externe Quelle und muss nicht dokumentiert werden. 
