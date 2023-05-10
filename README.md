@@ -3,12 +3,11 @@
 ## Regeln für eure GitHub Repositories
 
 - Achten Sie auf eine **logische, verständliche Ordnerstruktur**. Verwenden Sie die Vorgabe korrekt:
-
   - HTML Dateien im Haupttverzeichnis
   - CSS Dateien im Ordner "css"
   - JS Dateien im Ordner "js"
-  - Der Dateiname entspricht immer dem Namen der jeweiligen Web Page, zu der die Datei gehört. Ausnahme "main.css": CSS Code, der für alle Web Pages gleich ist
-  - Bilder im Ordner "images". Für Bilder gibt es keine Vorgaben beim Dateinamen.
+  - Bilder im Ordner "images"
+  - Verwenden Sie verständliche Dateinamen.  
 
 - **Kein Inline CSS oder Inline JS**:
   JavaScript Code muss in ".js" Dateien sein. CSS Code muss in ".css" Dateien sein.
