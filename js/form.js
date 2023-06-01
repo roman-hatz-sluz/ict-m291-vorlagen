@@ -1,6 +1,6 @@
 // (1) Variablen initialisieren
 const formContainer = document.getElementById("formContainer");
-const thankYouContainer = document.getElementById("thankYouContainer");
+const gameContainer = document.getElementById("game-container");
 const submitButton = document.getElementById("submit");
 submitButton.disabled = true;
 const emailField = document.getElementById("email");
@@ -38,7 +38,7 @@ const onClickSubmit = async () => {
   // Speichert die Daten in der Datenbank
   await databaseClient.insertInto(data);
 
-  // Nach dem Speichern verschwindet das Formular, eine Dankeschön Nachricht erscheint
+  // Nach dem Speichern verschwindet das Formular, das Game erscheint
   formContainer.classList.add("hidden");
-  thankYouContainer.classList.remove("hidden");
+  gameContainer.classList.remove("hidden");
 };
