@@ -1,1 +1,5 @@
-prettierrc.json
+node_modules
+students-code
+.cache
+.parcel-cache
+.DS_Store
