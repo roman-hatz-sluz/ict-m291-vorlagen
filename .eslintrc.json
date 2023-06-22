@@ -8,5 +8,8 @@
         "ecmaVersion": "latest"
     },
     "rules": {
+        "no-cond-assign": "off",
+        "no-useless-escape": "off"
+
     }
 }
