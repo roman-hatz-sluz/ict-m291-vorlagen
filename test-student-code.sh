@@ -10,10 +10,10 @@ for folder in "$directory"/*; do
     folder_name=$(basename "$folder")
     echo "process $folder_name ..."
     purifycss=$(./node_modules/.bin/purifycss  -ri $folder/**/*.css $folder/**/*.{html,js}  -o /dev/null)
-    csslint=$(rm -f output.css; find ./students-code  -name '*.css' -type f -exec cat {} \; > output.css; node_modules/.bin/csslint --config=.csslint  --quiet ./output.css)
-    htmlhint=$(node_modules/.bin/htmlhint --config .htmlhint ./students-code)
-    eslint=$(node_modules/.bin/eslint ./students-code)
-    
+    csslint=$(rm -f output.css; find "$folder"  -name '*.css' -type f -exec cat {} \; > output.css; node_modules/.bin/csslint --config=.csslint  --quiet ./output.css)
+    htmlhint=$(node_modules/.bin/htmlhint --config .htmlhint "$folder")
+    eslint=$(node_modules/.bin/eslint $folder)
+    rm -f ./student-reports/${folder_name}.txt
     cat << EOF > ./student-reports/${folder_name}.txt
 ${formatted_line}
 ${folder}
@@ -34,7 +34,7 @@ ${purifycss}
 ${eslint}
 EOF
  
-    echo $result
+   sleep 1
     
   fi
 done
