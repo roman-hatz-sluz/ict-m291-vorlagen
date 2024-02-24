@@ -6,9 +6,9 @@
 - **HTML-Dateien** im Hauptverzeichnis.
 - **CSS-Dateien** im Ordner `css`.
 - **JS-Dateien** im Ordner `js`.
-- **Bilder** im Ordner `images`. Für Bilder gibt es keine Vorgabe für den Dateinamen.
+- **Bilder** im Ordner `images`. 
 
-**Dateinamen**: 
+**Dateinamen für HTML, CSS und JS Dateien**: 
 - Der Dateiname entspricht immer dem Namen der Web Page, zu der die Datei gehört. Beispiel: `promotion.html` für die Promotion Page. 
 - Dateien, die auf mehreren Web Pages eingebunden werden, müssen mit "common" angeschrieben werden. Beispiel: `common.css` enthält das Page Layout, das für alle Webpages gleich ist.
 
