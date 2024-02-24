@@ -1,21 +1,23 @@
-# M291-2023
+# M291-2024/2025
 
-## Regeln für eure GitHub Repositories
+# Richtlinien für die Ordnerstruktur und Code-Konventionen
 
-- Achten Sie auf eine **logische, verständliche Ordnerstruktur**. Verwenden Sie die Vorgaben korrekt:
+## Ordnerstruktur
+- **HTML-Dateien** im Hauptverzeichnis.
+- **CSS-Dateien** im Ordner `css`.
+- **JS-Dateien** im Ordner `js`.
+- **Bilder** im Ordner `images`. Für Bilder gibt es keine Vorgabe für den Dateinamen.
 
-  - HTML Dateien ins Haupttverzeichnis
-  - CSS Dateien in den Ordner "css"
-  - JS Dateien in den Ordner "js"
-  - Der Dateiname entspricht immer dem Namen der jeweiligen Web Page, zu der die Datei gehört. Ausnahme "common.css": CSS Code, der für alle Web Pages gleich ist
-  - Bilder im Ordner "images". Für Bilder gibt es keine Vorgaben beim Dateinamen.
+**Dateinamen**: 
+- Der Dateiname entspricht immer dem Namen der Web Page, zu der die Datei gehört. Beispiel: `promotion.html` für die Promotion Page. 
+- Dateien, die auf mehreren Web Pages eingebunden werden, müssen mit "common" angeschrieben werden. Beispiel: `common.css` enthält das Page Layout, das für alle Webpages gleich ist.
 
-- **Kein Inline CSS oder Inline JS**:
-  JavaScript Code muss in ".js" Dateien sein. CSS Code muss in ".css" Dateien sein.
-- **Keine Code Duplikate**:
-  In HTML Dateien darf es vorkommen, dass HTML Code mehrfach vorkommt (zB. derselbe HTML Code für Header und Footer).
-  Derselbe CSS und JS Code darf jedoch nie mehrfach vorkommen, weder in derselben Datei noch über alle Dateien.
-- **Nutzung von externen Quellen**
-  Die Nutzung von externen Quellen ist erlaubt. **Trennen** Sie eigenen Code und kopierten Code möglichst **in separaten Dateien**.
-  Alle externen Quellen müssen mit einem Link dokumentiert werden. Der Link muss den kopierten Code enthalten. Das Unterrichtsmaterial gilt nicht als externe Quelle und muss nicht dokumentiert werden.  
-  Für Code aus Sprachgeneratoren/LLMs (ChatGPT) gelten für die Dokumentation andere Regeln (Screenshots statt Links), siehe Merkblatt.
+## Code-Praktiken
+- **Kein Inline CSS oder Inline JS**: JavaScript Code muss in `.js` Dateien, CSS-Code in `.css`-Dateien stehen.
+- **Keine Code-Duplikate**: In HTML-Dateien darf HTML-Code mehrfach vorkommen (z.B. derselbe Code für Header und Footer). Derselbe CSS- und JS-Code darf jedoch nicht mehrfach vorkommen, weder in derselben Datei noch über alle Dateien hinweg.
+
+## Verwendung externer Quellen
+- Die Verwendung externer Quellen ist erlaubt. Trennen Sie eigenen Code und kopierten Code in separaten Dateien.
+- Alle externen Quellen müssen durch einen Link dokumentiert werden. Dieser Link muss den kopierten Code enthalten.
+- Lehrmaterial gilt nicht als externe Quelle und muss nicht dokumentiert werden.
+- Für Code aus Sprachgeneratoren/LLMs (ChatGPT) gelten andere Regeln für die Dokumentation (Screenshots statt Links), siehe Merkblatt.
