@@ -4,7 +4,7 @@
 - Sie müssen nicht im Detail verstehen, wie der Code funktioniert. 
 */
 
-const SERVER_URL = "https://ict-290.herokuapp.com/sql";
+const SERVER_URL = "https://ict-290.herokuapp.com/";
 const databaseClient = {
   executeSqlQuery: async (data) => {
     try {
