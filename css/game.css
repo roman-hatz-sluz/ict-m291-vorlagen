@@ -1,4 +1,4 @@
-/* CSS Code, den es für die Promotion Page braucht */
+/* CSS Code, den es für die Game Page braucht */
 
 /* Hilfsklasse */
 .hidden {
@@ -11,7 +11,7 @@
 }
 
 #game-container {
-  max-width: 600px;
+  width: 600px;
   margin: auto;
 }
 

@@ -1,3 +1,5 @@
+/* JS Code, der nur auf der Game Page verwendet wird */
+
 const dino = document.getElementById("game-dino");
 const rock = document.getElementById("game-rock");
 const score = document.getElementById("game-score");
@@ -40,13 +42,17 @@ const dieAnimation = () => {
   );
 };
 
-gameBox.addEventListener("click", (event) => {
+gameBox.addEventListener("click", () => {
   if (!gameLoopInterval) {
     startGame();
-  } else {
-    if (!dino.classList.contains("jump-animation")) {
-      jump();
-    }
+  }
+});
+
+window.addEventListener("keypress", () => {
+  console.log("hello");
+  if (!dino.classList.contains("jump-animation")) {
+    console.log("juw");
+    jump();
   }
 });
 
@@ -70,15 +76,12 @@ const startGameLoop = () => {
     const rockLeft = parseInt(
       window.getComputedStyle(rock).getPropertyValue("left")
     );
-
     score.innerText = Number(score.innerText) + 1;
-
     if (rockLeft < 0) {
       rock.classList.add("hidden");
     } else {
       rock.classList.remove("hidden");
     }
-
     if (rockLeft < 50 && rockLeft > 0 && dinoTop > 150) {
       stopGame();
     }

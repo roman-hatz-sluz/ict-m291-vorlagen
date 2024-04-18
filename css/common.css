@@ -1,26 +1,27 @@
 /* CSS Code, der für alle Web Pages gleich ist und auf allen Web Pages eingebunden werden muss. */
 
-.webpage {
+html,
+body {
+  min-height: 100vh;
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+body {
   display: flex;
   flex-direction: column;
-  /* min-height: bewirkt, dass der Footer zuunterst ist. */
-  min-height: 100vh;
-  /* padding, margin: 0: bewirkt, dass es mit 100vh zuunterist */
-  padding: 0;
-  margin: 0;
 }
 
-.header {
-  background-color: #ffd7b5;
-  height: 100px;
+.header,
+.footer {
+  height: 70px;
+  color: #ffffff;
+  background-color: #2487c6;
 }
-
 .content {
   flex-grow: 1;
-  background-color: #ffb38a;
-}
-
-.footer {
-  background-color: #ff9248;
-  height: 50px;
+  background-color: #f7f7f7;
+  padding: 12px;
+  max-width: 800px;
+  margin: auto;
 }
