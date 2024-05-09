@@ -1,89 +1,34 @@
-/* JS Code, der nur auf der Game Page verwendet wird */
+// (1) Variablen initialisieren
+const formContainer = document.getElementById("formContainer");
+const gameContainer = document.getElementById("game-container");
+const submitButton = document.getElementById("submit");
+submitButton.disabled = true;
+const emailField = document.getElementById("email");
 
-const dino = document.getElementById("game-dino");
-const rock = document.getElementById("game-rock");
-const score = document.getElementById("game-score");
-const gameBox = document.getElementById("game");
-const background = document.getElementById("game-background");
-const gameOver = document.getElementById("game-end");
-const winnerText = document.getElementById("game-winner");
-const startScreen = document.getElementById("game-start");
-
-let gameLoopInterval = 0;
-const POINTS_TO_WIN = 100;
-
-const startGame = () => {
-  gameOver.classList.add("hidden");
-  background.classList.add("bg-animation");
-  rock.classList.add("rock-animation");
-  startScreen.classList.add("hidden");
-  resetScore();
-  startGameLoop();
-};
-
-const resetScore = () => {
-  score.innerText = 0;
-};
-
-const jump = () => {
-  dino.classList.add("jump-animation");
-  setTimeout(() => {
-    dino.classList.remove("jump-animation");
-  }, 500);
-};
-
-const dieAnimation = () => {
-  dino.classList.add("dino-dies");
-  return new Promise((resolve) =>
-    setTimeout(() => {
-      dino.classList.remove("dino-dies");
-      resolve();
-    }, 500)
-  );
-};
-
-gameBox.addEventListener("click", () => {
-  if (!gameLoopInterval) {
-    startGame();
-  }
+// (2) Interaktionen festlegen
+emailField.addEventListener("keyup", () => {
+  onChangeEmailField();
+});
+submitButton.addEventListener("click", async (event) => {
+  event.preventDefault();
+  onClickSubmit();
 });
 
-window.addEventListener("keypress", () => {
-  console.log("hello");
-  if (!dino.classList.contains("jump-animation")) {
-    console.log("juw");
-    jump();
-  }
-});
-
-const stopGame = async () => {
-  await dieAnimation();
-  background.classList.remove("bg-animation");
-  rock.classList.remove("rock-animation");
-  startScreen.classList.remove("hidden");
-  gameLoopInterval = clearInterval(gameLoopInterval);
-  gameOver.classList.remove("hidden");
-  if (Number(score.innerText) + 1 >= POINTS_TO_WIN) {
-    winnerText.classList.remove("hidden");
+// (3) Interaktionen Code
+const onChangeEmailField = () => {
+  if (emailField.value === "") {
+    submitButton.disabled = true;
+  } else {
+    submitButton.disabled = false;
   }
 };
+const onClickSubmit = async () => {
+  // Speichert die Daten in der Datenbank
+  await databaseClient.insertInto("user", {
+    email: emailField.value,
+  });
 
-const startGameLoop = () => {
-  gameLoopInterval = window.setInterval(() => {
-    const dinoTop = parseInt(
-      window.getComputedStyle(dino).getPropertyValue("top")
-    );
-    const rockLeft = parseInt(
-      window.getComputedStyle(rock).getPropertyValue("left")
-    );
-    score.innerText = Number(score.innerText) + 1;
-    if (rockLeft < 0) {
-      rock.classList.add("hidden");
-    } else {
-      rock.classList.remove("hidden");
-    }
-    if (rockLeft < 50 && rockLeft > 0 && dinoTop > 150) {
-      stopGame();
-    }
-  }, 50);
+  // Nach dem Speichern verschwindet das Formular, das Game erscheint
+  formContainer.classList.add("hidden");
+  gameContainer.classList.remove("hidden");
 };
