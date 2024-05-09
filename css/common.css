@@ -18,10 +18,20 @@ body {
   color: #ffffff;
   background-color: #2487c6;
 }
+.header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.header a:hover {
+  color: #f7f7f7;
+}
+
 .content {
   flex-grow: 1;
   background-color: #f7f7f7;
   padding: 12px;
+  min-width: 800px;
   max-width: 800px;
   margin: auto;
 }
