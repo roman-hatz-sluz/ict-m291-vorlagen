@@ -8,7 +8,7 @@
 const GROUP_NAME = "teacher";
 const PASSWORD = "vf9bm0k4uoji7o4b";
 
-const SERVER_URL = "http://localhost:3099/sql"; //"https://ict-290.herokuapp.com/sql";
+const SERVER_URL = "https://ict-290.herokuapp.com/sql";
 const databaseClient = {
   executeSqlQuery: async (sql) => {
     const payload = {
