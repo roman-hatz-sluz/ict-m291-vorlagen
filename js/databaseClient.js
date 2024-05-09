@@ -53,7 +53,6 @@ const databaseClient = {
       ","
     )}) VALUES ('${values.join("','")}')`;
     try {
-      console.log("sql", sql);
       result = await databaseClient.executeSqlQuery(sql);
     } catch (error) {
       console.error("Fehler bei der Datenbank: ", error);
