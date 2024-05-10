@@ -21,3 +21,6 @@
 - Die Verwendung externer Quellen ist erlaubt. Trennen Sie eigenen Code und kopierten Code in separaten Dateien.
 - Alle externen Quellen müssen durch einen Link dokumentiert werden. Dieser Link muss den kopierten Code enthalten.
 - Lehrmaterial gilt nicht als externe Quelle und muss nicht dokumentiert werden.
+
+
+Test
