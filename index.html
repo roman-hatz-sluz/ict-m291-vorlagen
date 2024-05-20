@@ -1,29 +1,59 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>TITEL_EINGEBEN</title>
-    <link rel="stylesheet" href="./css/common.css" />
-    <link rel="stylesheet" href="./css/index.css" />
-  </head>
 
-  <body>
-    <div class="header">
-      <div class="header-container">
-        <img width="40px" height="40px" src="./images/dino.png" />
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>2024/2025 M291 T-Rex-Runner Demo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/common.css" />
+  <link rel="stylesheet" href="./css/index.css" />
+</head>
+
+<body>
+  <div class="header">
+    <div class="header-container">
+    </div>
+    <div class="navigation-container">
+      <a href="./index.html"> <img class="logo" src="./images/dino.png" /></a>
+    </div>
+  </div>
+  <div class="content">
+
+    <div id="game-container">
+      <h4> 2024/2025 M291 T-Rex-Runner Demo</h4>
+      <div class="game-info">
+        Klicke, um zu springen.<br />
+        Weiche den Steinen aus.<br />
+        Erreiche 100 Punkte, um einen Preis zu gewinnen.
       </div>
-      <div class="navigation-container">
-        <a href="./index.html">Home</a>
-        <a href="./game.html">Game</a>
+
+      <div id="game">
+        <div id="game-start">
+          <div class="startScreenText">
+            Klicke, um das Spiel zu starten.
+          </div>
+        </div>
+        <div id="game-background"></div>
+        <div id="game-dino"></div>
+        <div id="game-rock"></div>
+        <div id="game-score">0</div>
+      </div>
+
+      <div id="game-end" class="hidden">
+        <div id="game-winner" class="hidden">
+          ⭐ ⭐ ⭐ Glückwunsch ⭐ ⭐ ⭐ <br />
+          Du hast mehr als 100 Punkte erzielt.
+        </div>
+        Das Spiel ist zu Ende.<br />
+        Klicke auf das Spiel, um erneut zu spielen.
       </div>
     </div>
-    <div class="content">
-      Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
-      Lorem ipsum Lorem ipsum Lorem ipsum <br />
-      <a href="./game.html">Zum Game</a>
-    </div>
-    <div class="footer">footer</div>
-    <script src="./js/index.js"></script>
-  </body>
+  </div>
+  </div>
+  <div class="footer">T-REX-RUNNER https://en.wikipedia.org/wiki/Dinosaur_Game</div>
+  <script src="./js/t-rex-runner.js"></script>
+
+</body>
+
 </html>
