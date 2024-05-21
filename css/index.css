@@ -69,7 +69,16 @@
 }
 
 .dino-dies {
-  background-color: red;
+  animation: dieAnimation 0.8s;
+}
+
+@keyframes dieAnimation {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  100% {
+    transform: rotate(-450deg) scale(0.5);
+  }
 }
 
 #game-rock {
@@ -132,7 +141,7 @@
   top: 50%;
   transform: translateY(-50%);
   text-align: center;
-  color: white;
+  color: #f7f7f7;
 }
 
 #game-score {
@@ -140,7 +149,9 @@
   top: 0;
   right: 0;
   margin: 12px;
+  padding-right: 24px;
   font-size: 32px;
+  color: #f7f7f7;
 }
 
 .hidden {

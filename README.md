@@ -9,7 +9,7 @@
 ## Features
 
 - Spiel startet erst, wenn der Benutzer klickt.
-- Alle Animationen gestoppt, wenn das Spiel nicht läuft.
+- Alle Animationen sind gestoppt, wenn das Spiel nicht läuft.
 - Hintergrundmusik und Sound Effekte
 - Zwei Background Layers, animiert mit unterschiedlicher Geschwindkeit (Parallax Effekt)
 - Animierte Spielfiguren mit transparenten GIFs
