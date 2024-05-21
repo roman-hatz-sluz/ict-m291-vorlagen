@@ -24,3 +24,8 @@
 - Power-Ups hinzufügen: Power-Ups hinzufügen, die zufällig erscheinen und dem Spieler Vorteile verschaffen.
 - Charakteranpassung hinzufügen: Erlaubt den Spielern, verschiedene Charaktere zu wählen.
 - Pausen- und Fortsetzungsfunktionalität hinzufügen: Der Spieler kann das Spiel pausieren und fortsetzen.
+- Das Spiel wird immer schneller und so immer schwieriger.
+- Highscore-System: Speichern und Anzeigen der höchsten Punktzahl, die der Spieler erreicht hat.
+- Online-Leaderboards: Globale Ranglisten, auf denen Spieler ihre Highscores vergleichen können.
+- Geschichten erzählen: Kurze Geschichten oder Dialoge, die nach bestimmten Meilensteinen freigeschaltet werden.
+- Wetteränderungen in Echtzeit: Dynamische Wetteränderungen basierend auf der realen Wetterlage des Spielers.
