@@ -21,6 +21,11 @@ const unregisterListener = () => {
   document.removeEventListener("keydown", keyDownHandler);
 };
 
+const playAudio = (audio) => {
+  audio.currentTime = 0;
+  audio.play();
+};
+
 const keyDownHandler = () => {
   if (!gameLoopInterval) {
     startGame();
@@ -42,8 +47,7 @@ const startGame = () => {
   dino.classList.add("dino-running");
   startScreen.classList.add("hidden");
   resetScore();
-  backgroundAudio.currentTime = 0;
-  backgroundAudio.play();
+  playAudio(backgroundAudio);
   startGameLoop();
 };
 
@@ -55,8 +59,7 @@ const jump = () => {
   if (dino.classList.contains("jump-animation")) {
     return false;
   }
-  jumpAudio.currentTime = 0;
-  jumpAudio.play();
+  playAudio(jumpAudio);
   dino.classList.add("jump-animation");
   setTimeout(() => {
     dino.classList.remove("jump-animation");
@@ -64,7 +67,7 @@ const jump = () => {
 };
 
 const dieAnimation = () => {
-  crashAudio.play();
+  playAudio(crashAudio);
   dino.classList.add("dino-dies");
   return new Promise((resolve) =>
     setTimeout(() => {
