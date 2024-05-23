@@ -26,6 +26,10 @@
   margin-bottom: 12px;
 }
 
+#game-end-score {
+  font-weight: 300;
+}
+
 /* Elemente im Spiel */
 .background-layer {
   position: absolute;

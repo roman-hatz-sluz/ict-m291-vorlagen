@@ -14,6 +14,8 @@
 - Zwei Background Layers, animiert mit unterschiedlicher Geschwindkeit (Parallax Effekt)
 - Animierte Spielfiguren mit transparenten GIFs
 - Das Hindernis bewegt sich mit zufälliger Geschwindigkeit.
+- Zwei verschiedene Hindernisse
+- Die Hindernisse bewegen sich immer schneller, um das Spiel schwieriger zu machen.
 
 ## Weitere Feature Ideen
 

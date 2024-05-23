@@ -7,6 +7,7 @@ const backgroundLayer1 = document.getElementById("bg-layer-1");
 const backgroundLayer2 = document.getElementById("bg-layer-2");
 const gameOver = document.getElementById("game-end");
 const yourScore = document.getElementById("game-end-score");
+const yourHighScore = document.getElementById("game-highscore");
 const startScreen = document.getElementById("game-start");
 
 const backgroundAudio = new Audio("./sounds/bg.mp3");
@@ -17,37 +18,17 @@ const catAudio = new Audio("./sounds/cat.mp3");
 
 let gameLoopInterval = 0;
 let currentObstacle = "dog";
-const registerListener = () => {
-  document.addEventListener("keydown", keyDownHandler);
-};
-const unregisterListener = () => {
-  document.removeEventListener("keydown", keyDownHandler);
-};
+let metersRun = 0;
+let personalBest = localStorage.getItem("highscore") || 0;
 
 const playAudio = (audio) => {
   audio.currentTime = 0;
   audio.play();
 };
 
-const keyDownHandler = () => {
-  if (!gameLoopInterval) {
-    startGame();
-    return false;
-  }
-  const isGameRunning = gameLoopInterval > 0;
-  const isSpaceKey = event.code === "Space";
-  if (isGameRunning && isSpaceKey) {
-    jump();
-  }
-};
-
 const startGame = () => {
   gameOver.classList.add("hidden");
-  backgroundLayer1.classList.add("bg-animation-layer-1");
-  backgroundLayer2.classList.add("bg-animation-layer-2");
-  obstacle.classList.remove("obstacle-animation-dog");
-  obstacle.classList.remove("obstacle-animation-cat");
-  obstacle.classList.add(`obstacle-animation-${currentObstacle}`);
+  startAnimations();
   hero.classList.add("hero-running");
   startScreen.classList.add("hidden");
   resetScore();
@@ -85,21 +66,32 @@ const dieAnimation = () => {
   );
 };
 
+const startAnimations = () => {
+  backgroundLayer1.classList.add("bg-animation-layer-1");
+  backgroundLayer2.classList.add("bg-animation-layer-2");
+  obstacle.classList.add(`obstacle-animation-${currentObstacle}`);
+};
+
 const stopAnimations = () => {
   backgroundLayer1.classList.remove("bg-animation-layer-1");
   backgroundLayer2.classList.remove("bg-animation-layer-2");
-  obstacle.classList.remove("obstacle-animation");
-
   hero.classList.remove("hero-running");
+  obstacle.classList.remove("obstacle-animation");
+  obstacle.classList.remove("obstacle-animation-dog");
+  obstacle.classList.remove("obstacle-animation-cat");
 };
 
 const stopGame = async () => {
   unregisterListener();
   gameLoopInterval = clearInterval(gameLoopInterval);
   stopAnimations();
-
   gameOver.classList.remove("hidden");
   yourScore.innerText = score.innerText;
+  if (metersRun > personalBest) {
+    personalBest = metersRun;
+    localStorage.setItem("highscore", personalBest);
+  }
+  yourHighScore.innerHTML = personalBest;
   await dieAnimation();
   backgroundAudio.pause();
   startScreen.classList.remove("hidden");
@@ -118,8 +110,16 @@ const toggleObstacleByRandom = () => {
   }
 };
 
+const getObstacleSpeed = () => {
+  // Base speed is between 1 to 4 seconds
+  let speed = Math.random() * 3 + 1;
+  let additionalSpeed = Math.floor(metersRun / 100) * 0.1;
+  speed = Math.max(speed - additionalSpeed, 0.5);
+  return speed;
+};
+
 const startGameLoop = () => {
-  let metersRun = 0;
+  metersRun = 0;
   gameLoopInterval = window.setInterval(() => {
     const heroTop = parseInt(
       window.getComputedStyle(hero).getPropertyValue("top")
@@ -132,8 +132,7 @@ const startGameLoop = () => {
     if (obstacleLeft < 0) {
       toggleObstacleByRandom();
       obstacle.classList.add("hidden");
-      const randomObstacleSpeed = Math.random() * 3 + 1; // random number between 1 and 3
-      console.log("currentObstacle", currentObstacle);
+      const randomObstacleSpeed = getObstacleSpeed();
       obstacle.style.animation = `obstacle-${currentObstacle} ${randomObstacleSpeed}s infinite linear`;
     } else {
       obstacle.classList.remove("hidden");
@@ -146,4 +145,21 @@ const startGameLoop = () => {
   }, 50);
 };
 
+const registerListener = () => {
+  document.addEventListener("keydown", keyDownHandler);
+};
+const unregisterListener = () => {
+  document.removeEventListener("keydown", keyDownHandler);
+};
+const keyDownHandler = () => {
+  if (!gameLoopInterval) {
+    startGame();
+    return false;
+  }
+  const isGameRunning = gameLoopInterval > 0;
+  const isSpaceKey = event.code === "Space";
+  if (isGameRunning && isSpaceKey) {
+    jump();
+  }
+};
 registerListener();
