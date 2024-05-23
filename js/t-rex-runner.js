@@ -1,5 +1,6 @@
-const dino = document.getElementById("game-dino");
-const rock = document.getElementById("game-rock");
+const hero = document.getElementById("game-hero");
+const obstacle = document.getElementById("game-obstacle");
+
 const score = document.getElementById("game-score");
 const gameBox = document.getElementById("game");
 const backgroundLayer1 = document.getElementById("bg-layer-1");
@@ -8,12 +9,14 @@ const gameOver = document.getElementById("game-end");
 const yourScore = document.getElementById("game-end-score");
 const startScreen = document.getElementById("game-start");
 
-let gameLoopInterval = 0;
 const backgroundAudio = new Audio("./sounds/bg.mp3");
 backgroundAudio.loop = true;
 const jumpAudio = new Audio("./sounds/jump.mp3");
-const crashAudio = new Audio("./sounds/crash.mp3");
+const dogAudio = new Audio("./sounds/dog.mp3");
+const catAudio = new Audio("./sounds/cat.mp3");
 
+let gameLoopInterval = 0;
+let currentObstacle = "dog";
 const registerListener = () => {
   document.addEventListener("keydown", keyDownHandler);
 };
@@ -38,13 +41,14 @@ const keyDownHandler = () => {
   }
 };
 
-registerListener();
 const startGame = () => {
   gameOver.classList.add("hidden");
   backgroundLayer1.classList.add("bg-animation-layer-1");
   backgroundLayer2.classList.add("bg-animation-layer-2");
-  rock.classList.add("rock-animation");
-  dino.classList.add("dino-running");
+  obstacle.classList.remove("obstacle-animation-dog");
+  obstacle.classList.remove("obstacle-animation-cat");
+  obstacle.classList.add(`obstacle-animation-${currentObstacle}`);
+  hero.classList.add("hero-running");
   startScreen.classList.add("hidden");
   resetScore();
   playAudio(backgroundAudio);
@@ -56,35 +60,44 @@ const resetScore = () => {
 };
 
 const jump = () => {
-  if (dino.classList.contains("jump-animation")) {
+  if (hero.classList.contains("jump-animation")) {
     return false;
   }
   playAudio(jumpAudio);
-  dino.classList.add("jump-animation");
+  hero.classList.add("jump-animation");
   setTimeout(() => {
-    dino.classList.remove("jump-animation");
+    hero.classList.remove("jump-animation");
   }, 500);
 };
 
 const dieAnimation = () => {
-  playAudio(crashAudio);
-  dino.classList.add("dino-dies");
+  if (currentObstacle === "dog") {
+    playAudio(dogAudio);
+  } else {
+    playAudio(catAudio);
+  }
+  hero.classList.add("hero-dies");
   return new Promise((resolve) =>
     setTimeout(() => {
-      dino.classList.remove("dino-dies");
+      hero.classList.remove("hero-dies");
       resolve();
     }, 800)
   );
 };
 
+const stopAnimations = () => {
+  backgroundLayer1.classList.remove("bg-animation-layer-1");
+  backgroundLayer2.classList.remove("bg-animation-layer-2");
+  obstacle.classList.remove("obstacle-animation");
+
+  hero.classList.remove("hero-running");
+};
+
 const stopGame = async () => {
   unregisterListener();
   gameLoopInterval = clearInterval(gameLoopInterval);
-  backgroundLayer1.classList.remove("bg-animation-layer-1");
-  backgroundLayer2.classList.remove("bg-animation-layer-2");
-  rock.classList.remove("rock-animation");
-  rock.classList.add("hidden");
-  dino.classList.remove("dino-running");
+  stopAnimations();
+
   gameOver.classList.remove("hidden");
   yourScore.innerText = score.innerText;
   await dieAnimation();
@@ -93,28 +106,44 @@ const stopGame = async () => {
   registerListener();
 };
 
+// 50% chance for either dog or cat
+const toggleObstacleByRandom = () => {
+  currentObstacle = Math.random() < 0.5 ? "cat" : "dog";
+  if (currentObstacle === "dog") {
+    obstacle.classList.remove("obstacle-cat");
+    obstacle.classList.add("obstacle-dog");
+  } else {
+    obstacle.classList.remove("obstacle-dog");
+    obstacle.classList.add("obstacle-cat");
+  }
+};
+
 const startGameLoop = () => {
   let metersRun = 0;
   gameLoopInterval = window.setInterval(() => {
-    const dinoTop = parseInt(
-      window.getComputedStyle(dino).getPropertyValue("top")
+    const heroTop = parseInt(
+      window.getComputedStyle(hero).getPropertyValue("top")
     );
-    const rockLeft = parseInt(
-      window.getComputedStyle(rock).getPropertyValue("left")
+    const obstacleLeft = parseInt(
+      window.getComputedStyle(obstacle).getPropertyValue("left")
     );
-    metersRun += 0.01 * 50; // 50 milliseconds per tick
+    metersRun += 0.01 * 50; // calculates average human runner speed
     score.innerText = metersRun.toFixed(0) + "m";
-    if (rockLeft < 0) {
-      rock.classList.add("hidden");
+    if (obstacleLeft < 0) {
+      toggleObstacleByRandom();
+      obstacle.classList.add("hidden");
       const randomObstacleSpeed = Math.random() * 3 + 1; // random number between 1 and 3
-      console.log(randomObstacleSpeed);
-      rock.style.animation = `rock ${randomObstacleSpeed}s infinite linear`;
+      console.log("currentObstacle", currentObstacle);
+      obstacle.style.animation = `obstacle-${currentObstacle} ${randomObstacleSpeed}s infinite linear`;
     } else {
-      rock.classList.remove("hidden");
+      obstacle.classList.remove("hidden");
     }
 
-    if (rockLeft < 50 && rockLeft > 0 && dinoTop > 150) {
+    if (obstacleLeft < 50 && obstacleLeft > 0 && heroTop > 150) {
+      obstacle.classList.add("hidden");
       stopGame();
     }
   }, 50);
 };
+
+registerListener();

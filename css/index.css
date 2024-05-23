@@ -13,6 +13,7 @@
   position: relative;
   height: 300px;
   cursor: pointer;
+  overflow: hidden;
 }
 
 .game-info {
@@ -55,19 +56,19 @@
   }
 }
 
-#game-dino {
+#game-hero {
   height: 75px;
   width: 75px;
   top: 153px;
   position: relative;
-  background-image: url("../images/dino-stand.png");
+  background-image: url("../images/hero-stand.png");
   background-size: cover;
 }
-.dino-running {
-  background-image: url("../images/dino.gif") !important;
+.hero-running {
+  background-image: url("../images/hero.gif") !important;
 }
 
-.dino-dies {
+.hero-dies {
   animation: dieAnimation 0.8s;
 }
 
@@ -80,25 +81,58 @@
   }
 }
 
-#game-rock {
+#game-obstacle {
+  position: relative;
+}
+.obstacle-dog {
   width: 75px;
   height: 75px;
-  position: relative;
   top: 95px;
   left: 550px;
-  background-image: url("../images/rock.gif");
+  background-image: url("../images/obstacle1.gif");
+  background-size: cover;
+}
+.obstacle-cat {
+  width: 85px;
+  height: 50px;
+  top: 110px;
+  left: 550px;
+  background-image: url("../images/obstacle2.gif");
   background-size: cover;
 }
 
-.rock-animation {
-  animation: rock 1.33s infinite;
+.obstacle-animation-dog {
+  animation: obstacle-dog 1.33s infinite;
+}
+.obstacle-animation-cat {
+  animation: obstacle-cat 1.33s infinite;
 }
 
-@keyframes rock {
+@keyframes obstacle-dog {
   0% {
     left: 550px;
   }
+  100% {
+    left: -50px;
+  }
+}
 
+@keyframes obstacle-cat {
+  0% {
+    left: 550px;
+  }
+  10% {
+    left: 530px;
+  }
+  20% {
+    left: 500px;
+  }
+  30% {
+    left: 450px;
+  }
+  40% {
+    left: 400px;
+  }
   100% {
     left: -50px;
   }
