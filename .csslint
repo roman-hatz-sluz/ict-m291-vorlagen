@@ -4,10 +4,10 @@
     "order-alphabetical",
     "ids",
     "box-sizing",
-    "star-property-hack"
+    "star-property-hack",
+    "qualified-headings"
   ],
-  "warnings": [
-  ],
+  "warnings": [],
   "errors": [
     "duplicate-properties"
   ]
