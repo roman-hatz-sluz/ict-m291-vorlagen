@@ -3,36 +3,18 @@ import subprocess
 import time
 import html
 from datetime import datetime
+from utils import list_large_files, check_folder_structure, check_unused_files
 
 directory = "./students-code"
 line_length = 80
 line_character = "-"
 formatted_line = line_character * line_length
 
-def check_unused_files(folder_path):
-    all_files = []
-    used_files = set()
-
-    # Gather all files
-    for root, dirs, files in os.walk(folder_path):
-        for file in files:
-            if not file.endswith('.md'):
-                all_files.append(os.path.relpath(os.path.join(root, file), folder_path))
-
-    # Check for usage
-    for root, dirs, files in os.walk(folder_path):
-        for file in files:
-            if file.endswith(('.html', '.js', '.css', '.php')):
-                file_path = os.path.join(root, file)
-                with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
-                    content = f.read()
-                    for target_file in all_files:
-                        if target_file in content:
-                            used_files.add(target_file)
-
-    # Find unused files
-    unused_files = set(all_files) - used_files
-    return '\n'.join(sorted(unused_files))
+def read_file(file_path):
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    rel_file_path = os.path.join(current_dir, file_path)
+    with open(rel_file_path, 'r', encoding='utf-8') as file:
+        return file.read()
 
 def generate_html_report(folder_name, folder_path, htmlhint, csslint, purifycss, eslint, unused_files_report):
     html_content = f"""
@@ -43,70 +25,50 @@ def generate_html_report(folder_name, folder_path, htmlhint, csslint, purifycss,
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{folder_name} - Bewertung Projektarbeit LBV_M291</title>
         <style>
-            body {{
-                font-family: 'Roboto', sans-serif;
-                margin: 20px;
-                padding: 0;
-                line-height: 1.6;
-                background-color: #f9f9f9;
-                color: #333;
-            }}
-            h1, h2 {{
-                color: #444;
-                border-bottom: 2px solid #ddd;
-                padding-bottom: 5px;
-            }}
-            h1 {{
-                font-size: 24px;
-                margin-bottom: 20px;
-            }}
-            h2 {{
-                font-size: 20px;
-                margin-top: 20px;
-                margin-bottom: 10px;
-            }}
-            pre {{
-                background: #fff;
-                padding: 15px;
-                border: 1px solid #ddd;
-                border-radius: 5px;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-                overflow-x: auto;
-            }}
-            .container {{
-                max-width: 800px;
-                margin: auto;
-                padding: 20px;
-                background: #fff;
-                border-radius: 10px;
-                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            }}
-            .timestamp {{
-                font-size: 14px;
-                color: #888;
-                margin-bottom: 10px;
-            }}
+            { read_file('./styles.css')}
         </style>
     </head>
     <body>
         <div class="container">
-            <h1>{folder_name} - Code Quality Checker - Projektarbeit LBV M291</h1>
+          <div class="timestamp">{datetime.now().strftime("%Y-%m-%d %H:%M")} - Projektarbeit LBV M291 - BBZW Sursee - Roman Hatz</div>
    
-            <div class="timestamp">{datetime.now().strftime("%Y-%m-%d %H:%M")}</div>
-         
-            <h2>HTML Checker</h2>
-            <pre>{html.escape(htmlhint)}</pre>
-            <h2>JS Checker</h2>
-            <pre>{eslint}</pre>
-            <h2>Unused Files Report</h2>
+             { read_file('./image.html')}
+           
+            <h1>HTML/CSS/JS Code Checker</h1>
+            <h2>{folder_name}</h2>
+           
+          <br>  <br>
+           <h3>Verwendung und Dateigrösse</h3>
+            Folgende Dateien werden nicht verwendet: 
             <pre>{unused_files_report}</pre>
-            <h2>CSS Checker</h2>
+            Folgende Dateien sind zu gross:
+            <pre>{list_large_files(folder_path)}</pre>
+
+            <h3> Ordnerstruktur / Vorgaben</h3>
+          
+                {check_folder_structure(folder_path)}
+  <br> <i style="font-size: 14px"> Siehe https://github.com/roman-hatz-sluz/ict-m291-vorlagen/blob/main/README.md </i> 
+           <h3>HTML</h3>
+              Testet die Code Qualität von HTML entsprechend den Vorgaben.  
+            <pre>{html.escape(htmlhint)}</pre>
+
+            <h3>JS</h3>
+             Testet die Code Qualität von JS entsprechend den Vorgaben.  
+            <pre>{eslint}</pre>
+
+           
+            <h3>CSS</h3>
+            Testet die Code Qualität von CSS.  
+            Beispiele: "@import not allowed" oder "Expected RBRACE"
             <pre>{stylelint}</pre>
-            <h2>CSS Checker 2</h2>
             <pre>{csslint}</pre>
-            <h2>CSS Purify</h2>
+            Testet, ob das CSS kompakter geschrieben werden kann. 
             <pre>{purifycss}</pre>
+
+<br><br>
+             
         </div>
+       
     </body>
     </html>
     """
@@ -159,5 +121,3 @@ for folder in os.listdir(directory):
 
         os.remove('output.css')
         time.sleep(1)
-
-
