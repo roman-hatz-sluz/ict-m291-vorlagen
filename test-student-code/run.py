@@ -16,28 +16,19 @@ def read_file(file_path):
     with open(rel_file_path, 'r', encoding='utf-8') as file:
         return file.read()
 
-def generate_html_report(folder_name, folder_path, htmlhint, csslint, purifycss, eslint, unused_files_report):
+def count_lines(file_extension, folder_path):
+    total_lines = 0
+    for root, _, files in os.walk(folder_path):
+        for file in files:
+            if file.endswith(file_extension):
+                file_path = os.path.join(root, file)
+                with open(file_path, 'r', encoding='utf-8') as f:
+                    total_lines += sum(1 for _ in f)
+    return total_lines
+
+def generate_html_report(folder_name, folder_path, htmlhint, csslint, purifycss, eslint, unused_files_report, js_lines, css_lines, html_lines):
     html_content = f"""
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>{folder_name} - Bewertung Projektarbeit LBV_M291</title>
-        <style>
-            { read_file('./styles.css')}
-        </style>
-    </head>
-    <body>
-        <div class="container">
-          <div class="timestamp">{datetime.now().strftime("%Y-%m-%d %H:%M")} - Projektarbeit LBV M291 - BBZW Sursee - Roman Hatz</div>
-   
-             { read_file('./image.html')}
-           
-            <h1>HTML/CSS/JS Code Checker</h1>
-            <h2>{folder_name}</h2>
-           
-          <br>  <br>
+            <h2>Repository:{folder_name}</h2>
            <h3>Verwendung und Dateigrösse</h3>
             Folgende Dateien werden nicht verwendet: 
             <pre>{unused_files_report}</pre>
@@ -48,10 +39,18 @@ def generate_html_report(folder_name, folder_path, htmlhint, csslint, purifycss,
           
                 {check_folder_structure(folder_path)}
   <br> <i style="font-size: 14px"> Siehe https://github.com/roman-hatz-sluz/ict-m291-vorlagen/blob/main/README.md </i> 
+            
+            <h3>Zeilenzählung der Dateien im Projekt</h3>
+            <ul>
+                <li>JavaScript-Dateien: {js_lines} Zeilen</li>
+                <li>CSS-Dateien: {css_lines} Zeilen</li>
+                <li>HTML-Dateien: {html_lines} Zeilen</li>
+            </ul>
+           
            <h3>HTML</h3>
               Testet die Code Qualität von HTML entsprechend den Vorgaben.  
             <pre>{html.escape(htmlhint)}</pre>
-
+          
             <h3>JS</h3>
              Testet die Code Qualität von JS entsprechend den Vorgaben.  
             <pre>{eslint}</pre>
@@ -65,12 +64,8 @@ def generate_html_report(folder_name, folder_path, htmlhint, csslint, purifycss,
             Testet, ob das CSS kompakter geschrieben werden kann. 
             <pre>{purifycss}</pre>
 
-<br><br>
-             
-        </div>
+<br><br>   
        
-    </body>
-    </html>
     """
     return html_content
 
@@ -113,8 +108,12 @@ for folder in os.listdir(directory):
 
         unused_files_report = check_unused_files(folder_path)
 
+        js_lines = count_lines('.js', folder_path)
+        css_lines = count_lines('.css', folder_path)
+        html_lines = count_lines('.html', folder_path)
+        
         report_path = f"./student-reports/{folder}.html"
-        html_content = generate_html_report(folder, folder_path, htmlhint, csslint, purifycss, eslint, unused_files_report)
+        html_content = generate_html_report(folder, folder_path, htmlhint, csslint, purifycss, eslint, unused_files_report, js_lines, css_lines, html_lines)
       
         with open(report_path, 'w') as report_file:
             report_file.write(html_content)
