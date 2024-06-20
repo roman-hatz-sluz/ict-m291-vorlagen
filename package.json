@@ -22,7 +22,6 @@
     "purify-css": "^1.2.5"
   },
   "dependencies": {
-    "lighthouse": "^12.0.0",
     "stylelint": "^16.6.1",
     "stylelint-config-standard": "^36.0.0"
   }

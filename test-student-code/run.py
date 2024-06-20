@@ -26,7 +26,7 @@ def count_lines(file_extension, folder_path):
                     total_lines += sum(1 for _ in f)
     return total_lines
 
-def generate_html_report(folder_name, folder_path, htmlhint, csslint, purifycss, eslint, unused_files_report, js_lines, css_lines, html_lines):
+def generate_html_report(folder_name, folder_path, htmlhint, htmlvalidate, csslint, purifycss, eslint, unused_files_report, js_lines, css_lines, html_lines):
     html_content = f"""
             <h2>Repository:{folder_name}</h2>
            <h3>Verwendung und Dateigrösse</h3>
@@ -50,7 +50,7 @@ def generate_html_report(folder_name, folder_path, htmlhint, csslint, purifycss,
            <h3>HTML</h3>
               Testet die Code Qualität von HTML entsprechend den Vorgaben.  
             <pre>{html.escape(htmlhint)}</pre>
-          
+           <pre>{html.escape(htmlvalidate)}</pre>
             <h3>JS</h3>
              Testet die Code Qualität von JS entsprechend den Vorgaben.  
             <pre>{eslint}</pre>
@@ -106,6 +106,12 @@ for folder in os.listdir(directory):
         stylelint_tmp = stylelint.stdout + stylelint.stderr
         stylelint = stylelint_tmp.replace('\n', '<br>')
 
+        htmlvalidate = subprocess.run(
+            ['node_modules/.bin/html-validate', folder_path], 
+            capture_output=True, text=True
+        ).stdout
+        
+
         unused_files_report = check_unused_files(folder_path)
 
         js_lines = count_lines('.js', folder_path)
@@ -113,7 +119,7 @@ for folder in os.listdir(directory):
         html_lines = count_lines('.html', folder_path)
         
         report_path = f"./student-reports/{folder}.html"
-        html_content = generate_html_report(folder, folder_path, htmlhint, csslint, purifycss, eslint, unused_files_report, js_lines, css_lines, html_lines)
+        html_content = generate_html_report(folder, folder_path, htmlhint, htmlvalidate, csslint, purifycss, eslint, unused_files_report, js_lines, css_lines, html_lines)
       
         with open(report_path, 'w') as report_file:
             report_file.write(html_content)
