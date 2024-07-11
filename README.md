@@ -1,4 +1,6 @@
-# M291-2024/2025
+Private repo
+
+# M291
 
 # Richtlinien für die Ordnerstruktur und Code-Konventionen
 
