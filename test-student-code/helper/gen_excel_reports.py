@@ -5,8 +5,8 @@ from openpyxl import load_workbook
 from bs4 import BeautifulSoup
 
 # Load the Excel file with data_only=True to get the calculated values
-excel_file = '../../__ignore/2024/Auswertung_2024.xlsx'
-output_dir = '../../__ignore/2024/excel'
+excel_file = '../../__ignore/2025/Auswertung_2025.xlsx'
+output_dir = '../../__ignore/2025/excel'
 workbook = load_workbook(excel_file, data_only=True)
 sheet = workbook.active
 

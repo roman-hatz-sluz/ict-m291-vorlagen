@@ -1,6 +1,6 @@
 # one long md files for all groups, split in files, only executed once
 
-input_file = '../../review24.md'
+input_file = '../../review25.md'
 
 # Read the entire content of the input file
 with open(input_file, 'r') as file:

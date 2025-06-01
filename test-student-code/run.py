@@ -38,7 +38,7 @@ def generate_html_report(folder_name, folder_path, htmlhint, htmlvalidate, cssli
             <h3> Ordnerstruktur / Vorgaben</h3>
           
                 {check_folder_structure(folder_path)}
-  <br> <i style="font-size: 14px"> Siehe https://github.com/roman-hatz-sluz/ict-m291-vorlagen/blob/main/README.md </i> 
+  <br> <i style="font-size: 14px"> Siehe README.md in der Projektvorlage </i> 
             
             <h3>Zeilenzählung der Dateien im Projekt</h3>
             <ul>

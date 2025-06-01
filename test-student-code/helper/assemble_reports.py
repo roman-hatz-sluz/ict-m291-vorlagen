@@ -3,10 +3,10 @@ import glob
 from datetime import datetime
 
 # Directories
-dir_excel = '../../__ignore/2024/excel'
-dir_txt = '../../__ignore/2024/qualitative'
-dir_code = '../../__ignore/2024/code-report'
-output_path = '../../__ignore/2024/reports'
+dir_excel = '../../__ignore/2025/excel'
+dir_txt = '../../__ignore/2025/qualitative'
+dir_code = '../../__ignore/2025/code-report'
+output_path = '../../__ignore/2025/reports'
 styles_path = '../../test-student-code/styles.css'
 image_path = '../../test-student-code/image.html'
 
@@ -24,16 +24,25 @@ styles_content = read_file_content(styles_path)
 # Process each HTML file in dir_excel
 for excel_file in glob.glob(os.path.join(dir_excel, '*.html')):
     group_name = os.path.splitext(os.path.basename(excel_file))[0]
-    
+    print(f'Processing group: {group_name}')
     # Find corresponding files in other directories
-    txt_file = glob.glob(os.path.join(dir_txt, f'{group_name}*'))[0]
-    code_file = glob.glob(os.path.join(dir_code, f'{group_name}*'))[0]
-    
+    try:
+        txt_file = glob.glob(os.path.join(dir_txt, f'{group_name}*'))[0]
+    except IndexError:
+        txt_file = None
+        print(f'Warning: No text file found for group {group_name}')
+
+    try:    
+        code_file = glob.glob(os.path.join(dir_code, f'{group_name}*'))[0]
+    except IndexError:
+        code_file = None
+        print(f'Warning: No code file found for group {group_name}')
+
     # Read contents of the files
     excel_content = read_file_content(excel_file)
-    txt_content = read_file_content(txt_file).replace('\n', '<br>')
-    code_content = read_file_content(code_file)
-    
+    txt_content = read_file_content(txt_file).replace('\n', '<br>') if txt_file else ''
+    code_content = read_file_content(code_file) if code_file else ''
+        
     # Create HTML header
     header = f"""
     <!DOCTYPE html>
@@ -49,7 +58,7 @@ for excel_file in glob.glob(os.path.join(dir_excel, '*.html')):
     <body>
         <div class="container">
           <div class="header">  
-            <div class="timestamp">{datetime.now().strftime("%Y-%m-%d %H:%M")} - Projektarbeit LBV M291 - BBZW Sursee - Roman Hatz - MMA21</div>
+            <div class="timestamp">{datetime.now().strftime("%Y-%m-%d %H:%M")} - Projektarbeit LBV M291 - BBZW Sursee - Roman Hatz - MMA22</div>
             { read_file_content(image_path)}
             <h2>Gruppe: {group_name}</h2>
             Bewertung der Projektarbeit Modul 291 "Oberflächen (UIs) mit Webtechnologien entwickeln"
